@@ -1,0 +1,4 @@
+newman run "Project.postman_collection.json" -e "Local.postman_environment.json"
+
+
+newman run "Project.postman_collection.json" -e "Local.postman_environment.json" -r htmlextra

@@ -1,0 +1,535 @@
+{
+	"info": {
+		"_postman_id": "0dbd0bbf-8aee-44c3-8d2f-8eb2c3e4d6f0",
+		"name": "Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17182313",
+		"_collection_link": "https://winter-spaceship-160493.postman.co/workspace/Team-Workspace~380ab40e-8958-4407-8092-83e786a35163/collection/17182313-0dbd0bbf-8aee-44c3-8d2f-8eb2c3e4d6f0?action=share&source=collection_link&creator=17182313"
+	},
+	"item": [
+		{
+			"name": "Create new Countries",
+			"item": [
+				{
+					"name": "add new country",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Ghana\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"var jsonfile = pm.response.json()\r",
+									"var countryid = jsonfile.id\r",
+									"pm.environment.set(\"countryid\",countryid);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n {\r\n     \"country\": \"Ghana\",\r\n     \"name\": \"omar\",\r\n     \"avatar\": \"https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1244.jpg\",\r\n     \"city\": \"Cairo\",\r\n     \"code\": \"56403-2276\"\r\n }\r\n  ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/omar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"omar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search for country",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Ghana\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/omar/{{countryid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"omar",
+								"{{countryid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit country",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"salwa\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"country\": \"egypt\",\r\n    \"name\": \"salwa\",\r\n    \"avatar\": \"https://cloudflare-ipfs.com/ipfs/irLVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1244.jpg\",\r\n    \"city\": \"New Cairo\",\r\n    \"code\": \"87403-1576\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/omar/{{countryid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"omar",
+								"{{countryid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Countries",
+			"item": [
+				{
+					"name": "Get All Country",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json();\r",
+									"\r",
+									"// Check if the response is an array and has at least one item\r",
+									"if (Array.isArray(response) && response.length > 0) {\r",
+									"    // Extract the ID of the first item\r",
+									"    var firstId = response[0].id; // Replace 'id' with the actual key for the ID in your response\r",
+									"    console.log(\"First ID:\", firstId);\r",
+									"    \r",
+									"    // Store the ID in an environment variable if needed\r",
+									"    pm.environment.set(\"firstId\", firstId);\r",
+									"} else {\r",
+									"    console.log(\"No items found in the response\");\r",
+									"}\r",
+									"\r",
+									"if (Array.isArray(response) && response.length > 0) {\r",
+									"    // Extract the ID of the last item\r",
+									"    var lastItem = response[response.length - 1]; // Get the last item\r",
+									"    var lastId = lastItem.id; // Replace 'id' with the actual key for the ID in your response\r",
+									"    console.log(\"Last ID:\", lastId);\r",
+									"    \r",
+									"    // Store the ID in an environment variable if needed\r",
+									"    pm.environment.set(\"lastId\", lastId);\r",
+									"} else {\r",
+									"    console.log(\"No items found in the response\");\r",
+									"}\r",
+									"\r",
+									"////////////////////////////////////////////////////\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Cairo\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/omar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"omar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get first Country",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"United Kingdom\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/omar/{{firstId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"omar",
+								"{{firstId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Last Country",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"egypt\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 300ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/omar/{{lastId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"omar",
+								"{{lastId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Pakistan\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/omar/{{itemId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"omar",
+								"{{itemId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "not found data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/omar/36",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"omar",
+								"36"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Modify Location",
+			"item": [
+				{
+					"name": "update with id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"omar\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 300ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"country\": \"egypt\",\r\n    \"name\": \"omar\",\r\n    \"avatar\": \"https://cloudflare-ipfs.com/ipfs/irLVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1244.jpg\",\r\n    \"city\": \"shobra\",\r\n    \"code\": \"73945-1223\"   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/omar/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"omar",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check countries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"egypt\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/omar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"omar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete country",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"egypt\");\r",
+							"});\r",
+							"pm.test(\"Response time is less than 300ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"pm.test(\"check title of country\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.country).to.eql(\"egypt\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Omar2020",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "omar",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/omar/{{countryid}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"omar",
+						"{{countryid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
