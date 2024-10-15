@@ -30,4 +30,4 @@ Assertions in Postman check:
 *Newman* is used to run Postman collections from the command line or as part of a CI/CD pipeline. This makes it easy to automate tests across different environments.
 
 ## Conclusion
-This project automates API testing of the Platzi Fake API using Postman, Newman, Jenkins, and RestAssured. With automated testing integrated into CI/CD, we can ensure that the API is consistently reliable and performs well over time.
+This project automates API testing of the Platzi Fake API using Postman, Newman. With automated testing integrated into CI/CD, we can ensure that the API is consistently reliable and performs well over time.
